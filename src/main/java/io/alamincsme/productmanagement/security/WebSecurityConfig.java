@@ -21,12 +21,26 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(requests -> requests
-                        .requestMatchers("/delete/**").hasAuthority("ADMIN")
-                        .requestMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
-                        .requestMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
-                        .requestMatchers("/").hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN")
-                        .anyRequest().authenticated())
+//        http.authorizeRequests(requests -> requests
+//                        .requestMatchers("/delete/**").hasAuthority("ADMIN")
+//                        .requestMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
+//                        .requestMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
+//                        .requestMatchers("/").hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN")
+//                        .anyRequest().authenticated())
+//                .formLogin(login -> login.permitAll())
+//                .logout(logout -> logout.permitAll())
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .exceptionHandling(handling -> handling.accessDeniedPage("/403"));
+
+        http
+                .authorizeHttpRequests((req) -> req
+                                .requestMatchers("/").hasAnyAuthority("USER","ADMIN")
+                                .requestMatchers("/new").hasAnyAuthority("ADMIN")
+                                .requestMatchers("/edit/**").hasAnyAuthority("ADMIN")
+                                .requestMatchers("/delete/**").hasAnyAuthority("ADMIN")
+                                .anyRequest().authenticated()
+
+                        )
                 .formLogin(login -> login.permitAll())
                 .logout(logout -> logout.permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
