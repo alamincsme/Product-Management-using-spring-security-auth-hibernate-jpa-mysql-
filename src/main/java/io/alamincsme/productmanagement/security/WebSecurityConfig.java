@@ -43,7 +43,7 @@ public class WebSecurityConfig {
                         )
                 .formLogin(login -> login.permitAll())
                 .logout(logout -> logout.permitAll())
-                .csrf(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(handling -> handling.accessDeniedPage("/403"));
 
         return http.build();
